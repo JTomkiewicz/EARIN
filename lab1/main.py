@@ -26,12 +26,42 @@ import numpy as np
 
 # gradient_descent(x, y)
 
+def getStartPoint(func_type):
+    start_point_type = 'scalar number' if func_type == 0 else 'initial vector'
+
+    # chose starting point type
+    start_method = int(input(
+        'Chose how to define start point\n0 - ' + start_point_type + '\n1 - Generate from uniform distribution\nInput: '))
+
+    while start_method not in [0, 1]:
+        start_method = int(input('Insert 0 or 1! Input: '))
+
+    if start_method == 0:  # inserted by user
+        if func_type == 0:  # scalar number
+            start_p = input('Insert starting point\nInput: ')
+
+            while not np.isscalar(start_p):  # point must be scalar
+                start_p = input('Nr must be scalar! Input: ')
+        else:  # initial vector
+            print('')
+    else:  # generated from uniform distibution
+        start_point_type = start_point_type.replace('initial ', '')
+
+        low_rage = input('Insert low range ' + start_point_type + '\nInput: ')
+        high_rage = input('Insert high range' + start_point_type + '\nInput: ')
+
+        start_p = np.random.uniform(low_rage, high_rage)
+
+    return start_p
+
 
 def getPositiveDefineMatrix():  # input positive define matrix A
     params = input(
         'Give params for matrix A. Rows have to be separated by ;\nInput: ')
+    # use numpy to create matrix
     matrix = np.matrix(params)
 
+    # check if matrix is positive-define
     if not np.all(np.linalg.eigvals(matrix) > 0):
         params = input('Matrix must be positive-define! Input: ')
         matrix = np.matrix(params)
@@ -99,6 +129,8 @@ def main():
     if(chosen_func_type == 1):
         params['b'] = getDimentionalVector(params['vectorDimension'])
         params['A'] = getPositiveDefineMatrix()
+
+    starting_point = getStartPoint(chosen_func_type)
 
 
 if __name__ == "__main__":
