@@ -27,9 +27,9 @@ def gradient_descent(x, y):
                 print("cost is rising isted of decresing, breaking the loop")
                 break
         cost = new_cost
-        if (cost < 0.1):
-            print("cost value low enough, breaking the loop")
-            break
+        # if (cost < 0.1):
+        #     print("cost value low enough, breaking the loop")
+        #     break
         ad = -(2/n) * sum(x**3*(y-y_predicted))
         bd = -(2/n) * sum(x**2*(y-y_predicted))
         cd = -(2/n) * sum(x*(y-y_predicted))
