@@ -3,6 +3,7 @@ import numpy as np
 import math
 import time
 import threading
+from sympy import *
 
 
 def gradient_descent(x, y):
@@ -42,6 +43,25 @@ def gradient_descent(x, y):
     print("a {}, b {}, c {}, d {}, cost {} iteration {}".format(
             a_curr, b_curr, c_curr, d_curr, cost, i))
 
+def gradientDescent(a,b,c,d):
+    x = Symbol('x')
+    y = Symbol('y')
+    f =  a*x**3+b*x**2+c*x+d
+    f_prime = f.diff(x)
+    f_prime = lambdify(x, f_prime)
+
+    x_curr = 0.5
+    iterations = 5000
+    learning_rate = 0.01
+    start_time = time.time()
+    print("Starting computation of gradient descent")
+    for i in range(iterations):
+        x_curr = x_curr -learning_rate * f_prime(x_curr)
+        print (x_curr)
+    print("--- %s seconds ---" % (time.time() - start_time))
+
+
+
 # y = ax^3 + bx^2 + cx + d
 # 1st a b c d
 # 2nd startX = 10
@@ -55,7 +75,9 @@ def expectedY(x_array, a, b, c, d):
         y.append(a*x**3 + b*x**2 + c*x + d)
     return np.array(y)
 
-x = np.array([-2, 1.8, 1.6, 1,4, 1, -0.7, -0.2, -0, 0.5, -1, -1.5, 2, 2.5, 3, 10, -10, -0.4 ])
+# x = np.array([-2, 1.8, 1.6, 1,4, 1, -0.7, -0.2, -0, 0.5, -1, -1.5, 2, 2.5, 3, 10, -10, -0.4 ])
 
-y = expectedY(x, 0.1, -1, -3, 11)
-gradient_descent(x, y)
+# y = expectedY(x, 0.1, -1, -3, 11)
+# gradient_descent(x, y)
+gradientDescent(0.5,-5, 2,-3)
+
