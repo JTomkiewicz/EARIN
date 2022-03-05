@@ -1,31 +1,34 @@
-def f0(x):
-    return 3*x**2 - 6*x - 45
+from cmath import inf
+import numpy as np
+import math
+import time
+import threading
+from sympy import *
 
 
-def f1(x):
-    return 6*x - 6
+def newtons(a, b, c, d, start):
+    x = Symbol('x')
+    y = Symbol('y')
+    f = a*x**3+b*x**2+c*x+d
+    f_prime = f.diff(x)
+    f_prime = lambdify(x, f_prime)
 
+    f = lambdify(x, f)
 
-def newtons(func, dfunc, start, eps=0.0001):
-    count = 0  # counter for nr of performed iterations
-    x = start  # start point
+    x_curr = start
+    iterations = 0
+    start_time = time.time()
 
-    # func value at 1st given start point
-    f = func(x)
-
+    print("Starting computation of Newtons")
     # perform until value is bigger than eps
-    while (abs(f) > eps):
-        # f(x) and df(x) at x
-        f = func(x)
-        df = dfunc(x)
-
+    while (abs(f(x_curr)) > 0.0001):
         # find new x
-        x = x - (f)/(df)
+        x_curr = x_curr - f(x_curr)/f_prime(x_curr)
+        # increate nr of performed iterations
+        iterations += 1
+        print(x_curr)
 
-        # increate counter
-        count += 1
-
-    print(f"{count} iterations performed\nOptimal point is {x}")
+    print("--- %s seconds ---" % (time.time() - start_time))
 
 
-newtons(f0, f1, 50)
+newtons(0.5, -5, 2, -3, 0.5)
