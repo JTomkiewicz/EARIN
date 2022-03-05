@@ -1,31 +1,6 @@
 import numpy as np
 
 
-# def gradient_descent(x, y):
-#     m_curr = b_curr = 0
-#     iterations = 10000
-#     n = len(x)
-#     learning_rate = 0.08
-
-#     for i in range(iterations):
-#         y_predicted = m_curr * x + b_curr
-#         cost = (1/n) * sum([val**2 for val in (y-y_predicted)])
-#         ad = -(2/n) * sum(x**3*(y-y_predicted))
-#         bd = -(2/n) * sum(x**2*(y-y_predicted))
-#         cd = -(2/n) * sum(x*(y-y_predicted))
-#         dd = -(2/n) * sum(y-y_predicted)
-#         a_curr = a_curr - learning_rate * ad
-#         b_curr = b_curr - learning_rate * bd
-#         c_curr = c_curr - learning_rate * cd
-#         d_curr = d_curr - learning_rate * dd
-#         print("a {}, b {}, c {}, d {}, cost {} iteration {}".format(
-#             a_curr, b_curr, c_curr, d_curr, cost, i))
-
-# x = np.array([1, 2, 3, 4, 5])
-# y = np.array([5, 7, 9, 11, 13])
-
-# gradient_descent(x, y)
-
 def getStartPoint(func_type):
     start_point_type = 'scalar number' if func_type == 0 else 'initial vector'
 
