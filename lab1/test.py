@@ -41,14 +41,15 @@ def gradient_descent(x, y):
         d_curr = d_curr - learning_rate * dd
     print("--- %s seconds ---" % (time.time() - start_time))
     print("a {}, b {}, c {}, d {}, cost {} iteration {}".format(
-            a_curr, b_curr, c_curr, d_curr, cost, i))
+        a_curr, b_curr, c_curr, d_curr, cost, i))
 
-def gradientDescent(a,b,c,d):
+
+def gradientDescent(a, b, c, d):
     x = Symbol('x')
-    y = Symbol('y')
-    f =  a*x**3+b*x**2+c*x+d
+    f = a*x**3+b*x**2+c*x+d
     f_prime = f.diff(x)
     f_prime = lambdify(x, f_prime)
+    eps = 0.000001
 
     x_curr = 0.5
     iterations = 5000
@@ -56,28 +57,43 @@ def gradientDescent(a,b,c,d):
     start_time = time.time()
     print("Starting computation of gradient descent")
     for i in range(iterations):
-        x_curr = x_curr -learning_rate * f_prime(x_curr)
-        print (x_curr)
+        x_new = x_curr - learning_rate * f_prime(x_curr)
+        if (abs(x_new - x_curr < eps)):
+            break
+        if (time.time() - start_time > 1):
+            break
+        x_curr = x_new
+    print(x_curr)
+    print(i)
     print("--- %s seconds ---" % (time.time() - start_time))
 
 
+def gradientDescentG(A, b, c, x):
+    eps = 0.000001
+    iterations = 10000
+    learning_rate = 0.01
+    start_time = time.time()
+    print("Starting computation of gradient descent")
+    for i in range(iterations):
+        grad = np.add(np.dot(np.add(A, np.transpose(A)), x), b)
+        x = x - np.multiply(grad, learning_rate)
+        if (time.time() - start_time > 1):
+            break
+    Gx = c + np.dot(np.transpose(b), x) + \
+        np.dot(np.add(np.transpose(x), A), x)
+    print(Gx)
+    print(i)
+    print("--- %s seconds ---" % (time.time() - start_time))
 
-# y = ax^3 + bx^2 + cx + d
-# 1st a b c d
-# 2nd startX = 10
-# 2nd [0, 10]
-# uniform distribution, in statistics, distribution function in which every possible result is equally likely; that is, the probability of each occurring is the same
 
+c = 5
+b = np.array([[2], [1]])
+A = np.array([[2, 5], [1, 3]])
+x = np.array([[1], [0]])
+print(np.add(np.dot(np.add(A, np.transpose(A)), x), b))
+gradientDescentG(A, b, c, x)
+# print(np.transpose(b))
+# print(c + np.dot(np.transpose(b), x) +
+#       np.dot(np.dot(np.transpose(x), A), x))
 
-def expectedY(x_array, a, b, c, d):
-    y = []
-    for x in x_array:
-        y.append(a*x**3 + b*x**2 + c*x + d)
-    return np.array(y)
-
-# x = np.array([-2, 1.8, 1.6, 1,4, 1, -0.7, -0.2, -0, 0.5, -1, -1.5, 2, 2.5, 3, 10, -10, -0.4 ])
-
-# y = expectedY(x, 0.1, -1, -3, 11)
-# gradient_descent(x, y)
-gradientDescent(0.5,-5, 2,-3)
-
+# gradientDescent(0.5, -5, 2, -3)

@@ -63,9 +63,9 @@ void gradientDescent(const double *x, const double *y, const size_t n) {
             << ", cost = " << cost << ", iters :" << i << '\n';
 }
 
-// char *expectedY(const char *x, const float a, const float b, const float c,
+// float *expectedY(const float *x, const float a, const float b, const float c,
 //                 const float d, const size_t n) {
-//   char y[n];
+//   float y[n];
 //   for (size_t i = 0; i < n; i++) {
 //     y[i] = a * pow(x[i], 3) + b * pow(x[i], 2) + c * x[i] + d;
 //   }
