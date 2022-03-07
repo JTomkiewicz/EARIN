@@ -17,6 +17,7 @@ def getStartPoint(func_type):
 
             while not np.isscalar(start_p):  # point must be scalar
                 start_p = input('Nr must be scalar! Input: ')
+            start_p = float(start_p)
         else:  # initial vector
             print('')
     else:  # generated from uniform distibution
@@ -61,7 +62,7 @@ def readScalar(letter):
     while not np.isscalar(number):  # abcd must be scalar nrs
         number = input('Nr must be scalar! Input: ')
 
-    return number
+    return float(number)
 
 
 def getParams(func_type):
