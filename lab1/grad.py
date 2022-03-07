@@ -17,8 +17,8 @@ def gradient_descent(x, y):
         print("m {}, b {}, cost {} iteration {}".format(m_curr, b_curr, cost, i))
 
 
-x = np.array([1, 2, 3, 4, 5])
-y = np.array([5, 7, 9, 11, 13])
+# x = np.array([1, 2, 3, 4, 5])
+# y = np.array([5, 7, 9, 11, 13])
 # n = float(len(x))
 # m_curr = b_curr = 0
 # y_predicted = m_curr * x + b_curr
@@ -26,4 +26,4 @@ y = np.array([5, 7, 9, 11, 13])
 # print(n)
 # print(float(1/n))
 # print(sum([val**2 for val in (y-y_predicted)]))
-gradient_descent(x, y)
+# gradient_descent(x, y)

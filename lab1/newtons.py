@@ -1,9 +1,5 @@
-from cmath import inf
 import numpy as np
-import math
 import time
-import threading
-from sympy import *
 
 
 def newtonsFx(a, b, c, d, x):
@@ -19,18 +15,21 @@ def newtonsFx(a, b, c, d, x):
     def f_prime2(x):
         return 6*a*x + 2*b
 
+    print("Starting computation of Newtons (Fx)")
     start_time = time.time()
-
-    print("Starting computation of Newtons")
 
     for i in range(iterations):
         x_new = x - f_prime(x)/f_prime2(x)
+
         if (abs(x - x_new) < eps or time.time() - start_time > 1):
             break
+
         x = x_new
-    print(x)
-    print(i)
-    print("--- %s seconds ---" % (time.time() - start_time))
+
+    print('Found x: ' + str(x))
+    print('F(x): ' + str(f(x)))
+    print('Nr of performed iterations: ' + str(i))
+    print('Nr of seconds: ' + str((time.time() - start_time)))
 
 
 def newtonsGx(A, b, c, x):
@@ -38,9 +37,9 @@ def newtonsGx(A, b, c, x):
     iterations = 1000000
     learning_rate = 0.01
 
+    print("Starting computation of Newtons (Gx)")
     start_time = time.time()
 
-    print("Starting computation of Newtons")
     for i in range(iterations):
         f_prime = np.add(np.dot(np.add(A, np.transpose(A)), x), b)
 
@@ -57,18 +56,7 @@ def newtonsGx(A, b, c, x):
 
     Gx = c + np.dot(np.transpose(b), x) + np.dot(np.dot(np.transpose(x), A), x)
 
-    print(x)
-    print(Gx)
-    print(i)
-    print("--- %s seconds ---" % (time.time() - start_time))
-
-
-# newtonsFx(0.5, -5, 2, -3, 0.5)
-
-
-c = 5
-b = np.array([[-2], [1]])
-A = np.array([[2, -1], [-1, 2]])
-x = np.array([[10], [4]])
-
-newtonsGx(A, b, c, x)
+    print('Found x: ' + x)
+    print('G(x): ' + Gx)
+    print('Nr of performed iterations: ' + i)
+    print('Nr of seconds: ' + (time.time() - start_time))

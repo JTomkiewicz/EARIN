@@ -1,5 +1,9 @@
 import numpy as np
 
+# import functions from other files
+import newtons
+import grad
+
 
 def getStartPoint(func_type):
     start_point_type = 'scalar number' if func_type == 0 else 'initial vector'
@@ -105,7 +109,20 @@ def main():
         params['b'] = getDimentionalVector(params['vectorDimension'])
         params['A'] = getPositiveDefineMatrix()
 
-    starting_point = getStartPoint(chosen_func_type)
+    starting_point = int(getStartPoint(chosen_func_type))
+
+    if chosen_method == 0:  # gradient
+        if chosen_func_type == 0:  # Fx
+            print('')
+        else:  # Gx
+            print('')
+    else:  # newtons
+        if chosen_func_type == 0:  # Fx
+            newtons.newtonsFx(int(params['a']), int(params['b']),
+                              int(params['c']), int(params['d']), starting_point)
+        else:  # Gx
+            newtons.newtonsGx(params['A'], params['b'],
+                              params['c'], starting_point)
 
 
 if __name__ == "__main__":
