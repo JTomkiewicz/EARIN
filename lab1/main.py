@@ -113,9 +113,11 @@ def main():
 
     if chosen_method == 0:  # gradient
         if chosen_func_type == 0:  # Fx
-            print('')
+            gradient.gradientDescentFx(float(params['a']), float(params['b']),
+                                       float(params['c']), float(params['d']), starting_point)
         else:  # Gx
-            print('')
+            gradient.gradientDescentGx(params['A'], params['b'],
+                                       float(params['c']), float(starting_point))
     else:  # newtons
         if chosen_func_type == 0:  # Fx
             newtons.newtonsFx(float(params['a']), float(params['b']),
