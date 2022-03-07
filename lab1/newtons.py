@@ -45,18 +45,17 @@ def newtonsGx(A, b, c, x):
 
         f_prime2 = np.add(np.transpose(A), A)
 
-        x_new = x - \
-            np.dot(np.dot(np.linalg.inv(f_prime2), f_prime), learning_rate)
+        x_new = x - np.dot(np.dot(np.linalg.inv(f_prime2),
+                           f_prime), learning_rate)
 
         if ((x[0][0]-x_new[0][0] < eps and x[1][0]-x_new[1][0] < eps) or (time.time() - start_time > 1)):
-            print('breaking')
             break
 
         x = x_new
 
     Gx = c + np.dot(np.transpose(b), x) + np.dot(np.dot(np.transpose(x), A), x)
 
-    print('Found x: ' + x)
-    print('G(x): ' + Gx)
-    print('Nr of performed iterations: ' + i)
-    print('Nr of seconds: ' + (time.time() - start_time))
+    print('Found x: ' + str(x))
+    print('G(x): ' + str(Gx))
+    print('Nr of performed iterations: ' + str(i))
+    print('Nr of seconds: ' + str((time.time() - start_time)))
