@@ -38,13 +38,12 @@ def newtonsFx(a, b, c, d, x):
 
 
 def newtonsGx(A, b, c, x):
-    eps = 0.00000000001
+    eps = 10**-10
     iterations = 1000000
-    learning_rate = 0.01
+    learning_rate = 1
 
     print("Starting computation of Newtons (Gx)")
     start_time = time.time()
-
     for i in range(iterations):
         f_prime = np.add(np.dot(np.add(A, np.transpose(A)), x), b)
 
@@ -69,3 +68,11 @@ def newtonsGx(A, b, c, x):
     print('G(x): ' + str(Gx))
     print('Nr of performed iterations: ' + str(i))
     print('Nr of seconds: ' + str((time.time() - start_time)))
+
+
+# c = 5
+# b = np.array([[-11], [1]])
+# A = np.array([[21, -1], [-6, 2]])
+# x = np.array([[10], [4]])
+
+# newtonsGx(A, b, c, x)

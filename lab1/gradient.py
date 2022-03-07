@@ -3,7 +3,7 @@ import time
 
 
 def gradientDescentFx(a, b, c, d, x):
-    eps = 0.000001
+    eps = 10**-10
     iterations = 5000
     learning_rate = 0.01
 
@@ -33,10 +33,11 @@ def gradientDescentFx(a, b, c, d, x):
     print('F(x): ' + str(f(x)))
     print('Nr of performed iterations: ' + str(i))
     print('Nr of seconds: ' + str((time.time() - start_time)))
+    return f(x)
 
 
 def gradientDescentGx(A, b, c, x):
-    eps = 0.00000000001
+    eps = 10**-10
     iterations = 1000000
     learning_rate = 0.01
 
@@ -64,3 +65,11 @@ def gradientDescentGx(A, b, c, x):
     print('G(x): ' + str(Gx))
     print('Nr of performed iterations: ' + str(i))
     print('Nr of seconds: ' + str((time.time() - start_time)))
+    return Gx.item(0), i, (time.time() - start_time), x
+
+
+# c = 5
+# b = np.array([[-11], [1]])
+# A = np.array([[21, -1], [-6, 2]])
+# x = np.array([[10], [4]])
+# gradientDescentGx(A, b, c, x)

@@ -37,16 +37,43 @@ def main():
     # read and validate input start point
     start_point = inputs.getStartPoint(chosen_func_type, params[1])
 
-    if chosen_method == 0:  # gradient
-        if chosen_func_type == 0:  # Fx
-            gradient.gradientDescentFx(a, b, c, d, start_point)
-        else:  # Gx
-            gradient.gradientDescentGx(A, b, c, start_point)
-    else:  # newtons
-        if chosen_func_type == 0:  # Fx
-            newtons.newtonsFx(a, b, c, d, start_point)
-        else:  # Gx
-            newtons.newtonsGx(A, b, c, start_point)
+    # ask user for batch mode
+    batch_mode = int(
+        input('Would you like to use batch mode?\n0 - No\n1 - Yes\nInput: '))
+
+    while batch_mode not in [0, 1]:
+        batch_mode = int(input('Insert 0 or 1! Input: '))
+
+    if batch_mode == 0:
+        n = 1
+    else:
+        while True:
+            try:
+                n = input('How many times run program?\nInput: ')
+                n = int(n)
+                break
+            except ValueError:
+                print("Input must be a int! Input: ")
+
+    results = []
+
+    for i in range(n):
+        if chosen_method == 0:  # gradient
+            if chosen_func_type == 0:  # Fx
+                results.append(gradient.gradientDescentFx(
+                    a, b, c, d, start_point))
+            else:  # Gx
+                results.append(gradient.gradientDescentGx(
+                    A, b, c, start_point))
+        else:  # newtons
+            if chosen_func_type == 0:  # Fx
+                results.append(newtons.newtonsFx(a, b, c, d, start_point))
+            else:  # Gx
+                results.append(newtons.newtonsGx(A, b, c, start_point))
+
+    if batch_mode == 1:
+        print('After ' + str(n) + ' iterations, result are following:')
+        print(results)
 
 
 if __name__ == "__main__":
