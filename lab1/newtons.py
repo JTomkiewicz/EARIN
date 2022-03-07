@@ -21,8 +21,13 @@ def newtonsFx(a, b, c, d, x):
     for i in range(iterations):
         x_new = x - f_prime(x)/f_prime2(x)
 
-        if (abs(x - x_new) < eps or time.time() - start_time > 1):
+        if (abs(x_new - x) < eps or time.time() - start_time > 1):
             break
+
+        if(abs(x_new - x) > 1e100):
+            print(
+                'Breaking!\nYour function is probably going to minus inf\nCheck params!')
+            return
 
         x = x_new
 
@@ -50,6 +55,11 @@ def newtonsGx(A, b, c, x):
 
         if ((x[0][0]-x_new[0][0] < eps and x[1][0]-x_new[1][0] < eps) or (time.time() - start_time > 1)):
             break
+
+        if(abs(x_new[0][0] - x[0][0]) > 1e100 and abs(x_new[1][0] - x[1][0]) > 1e100):
+            print(
+                'Breaking!\nYour function is probably going to minus inf\nCheck params!')
+            return
 
         x = x_new
 

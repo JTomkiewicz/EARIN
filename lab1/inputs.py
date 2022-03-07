@@ -13,11 +13,7 @@ def getStartPoint(func_type):
 
     if start_method == 0:  # inserted by user
         if func_type == 0:  # scalar number
-            start_p = input('Insert starting point\nInput: ')
-
-            while not np.isscalar(start_p):  # point must be scalar
-                start_p = input('Nr must be scalar! Input: ')
-            start_p = float(start_p)
+            start_p = readScalar('starting point')
         else:  # initial vector
             print('')
     else:  # generated from uniform distibution
@@ -31,15 +27,18 @@ def getStartPoint(func_type):
     return start_p
 
 
-def getPositiveDefineMatrix():  # input positive define matrix A
+def getPositiveDefineMatrix(matrix_dim):  # input positive define matrix A
     params = input(
         'Give params for matrix A. Rows have to be separated by ; (example: 2 -1; -1 2)\nInput: ')
     # use numpy to create matrix
     matrix = np.matrix(params)
 
-    # check if matrix is positive-define
-    if not np.all(np.linalg.eigvals(matrix) > 0):
-        params = input('Matrix must be positive-define! Input: ')
+    dimentions = str(matrix_dim) + 'x' + str(matrix_dim)
+
+    # check if matrix is positive-define and has matrix_dim nr of rows
+    while np.all(np.linalg.eigvals(matrix) <= 0 or matrix.shape[0] == matrix_dim):
+        params = input(
+            'Matrix must be positive-define and their dimensions have to be ' + dimentions + '! Input: ')
         matrix = np.matrix(params)
 
     return matrix
@@ -57,11 +56,13 @@ def getDimentionalVector(d):
 
 
 def readScalar(letter):
-    number = input('Insert parameter ' + letter + '\nInput: ')
-
-    while not np.isscalar(number):  # abcd must be scalar nrs
-        number = input('Nr must be scalar! Input: ')
-
+    while True:
+        try:
+            number = input('Insert parameter ' + letter + '\nInput: ')
+            number = float(number)
+            break
+        except ValueError:
+            print("Input must be a number!")
     return float(number)
 
 
@@ -75,14 +76,11 @@ def getParams(func_type):
         return a, b, c, d
 
     # Gx
-    c = input('Insert parameter c\nInput: ')
-
-    while not np.isscalar(c):  # c must be scalar nr
-        c = input('Nr must be scalar! Input: ')
+    c = readScalar('c')
 
     vector_dim = int(input('Insert vector d dimension\nInput: '))
 
-    while not vector_dim > 0:
+    while not vector_dim > 0:  # vector has to be bigger than 0
         vector_dim = int(input('Vector dimension must be > 0\nInput: '))
 
     return c, vector_dim

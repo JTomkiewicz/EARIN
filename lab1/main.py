@@ -32,7 +32,7 @@ def main():
     else:  # Gx
         c = params[0]
         b = inputs.getDimentionalVector(params[1])
-        A = inputs.getPositiveDefineMatrix()
+        A = inputs.getPositiveDefineMatrix(params[1])
 
     # read and validate input start point
     start_point = inputs.getStartPoint(chosen_func_type)
