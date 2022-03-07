@@ -22,7 +22,7 @@ def gradientDescentFx(a, b, c, d, x):
         if (abs(x - x_new) < eps or time.time() - start_time > 1):
             break
 
-        x_curr = x
+        x = x_new
 
     print('Found x: ' + str(x))
     print('F(x): ' + str(f(x)))
