@@ -1,6 +1,5 @@
 import numpy as np
 import time
-from sympy import *
 
 
 def gradientDescentFx(a, b, c, d, x):
