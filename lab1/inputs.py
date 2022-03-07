@@ -37,21 +37,17 @@ def getPositiveDefineMatrix(matrix_dim):  # input positive define matrix A
             for y in range(matrix_dim):
                 matrix[x][y] = readScalar("A[{}][{}]".format(x, y))
         # check if matrix is positive-define
-        if (not np.all(np.linalg.eigvals(matrix) > 0)):
+        if (np.all(np.linalg.eigvals(matrix) > 0)):
             break
         print("Matrix, is not a positive definite matrix, please rewrite the data")
 
-    return matrix
+    return np.matrix(matrix)
 
 
 def getDimentionalVector(d):
-    # d-dimensional vector full of 0s
     array = np.zeros((d, 1))
-
-    # add 1s
     for i in range(d):
-        array[i][0] = readScalar("b[{}][0]".format(i))
-
+        array[i][0] = readScalar("b[{}]".format(i))
     return array
 
 
@@ -78,9 +74,8 @@ def getParams(func_type):
     # Gx
     c = readScalar('c')
 
-    vector_dim = int(input('Insert vector d dimension\nInput: '))
-
-    while not vector_dim > 0:  # vector has to be bigger than 0
-        vector_dim = int(input('Vector dimension must be > 0\nInput: '))
+    vector_dim = int(input('Insert vector length\nInput: '))
+    while vector_dim <= 0:  # vector has to be bigger than 0
+        vector_dim = int(input('Vector length must be > 0\nInput: '))
 
     return c, vector_dim
