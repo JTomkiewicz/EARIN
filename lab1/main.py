@@ -35,7 +35,7 @@ def main():
         A = inputs.getPositiveDefineMatrix(params[1])
 
     # read and validate input start point
-    start_point = inputs.getStartPoint(chosen_func_type)
+    start_point = inputs.getStartPoint(chosen_func_type, params[1])
 
     if chosen_method == 0:  # gradient
         if chosen_func_type == 0:  # Fx
