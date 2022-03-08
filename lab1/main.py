@@ -84,7 +84,7 @@ def main():
     else:
         print('Functions were performed ' + str(n) + ' times')
 
-        if chosen_func_type == 0:
+        if chosen_func_type == 0:  # Fx
             # mean values
             print('Mean value of x:\n' + str(np.mean(np.array(result_x))))
 
@@ -96,6 +96,20 @@ def main():
                   str(np.std(np.array(result_x))))
 
             print('Standard deviation of F(x):\n' +
+                  str(np.std(np.array(result_func_x))))
+
+        else:  # Gx
+            # mean values
+            print('Mean value of x:\n' + str(np.mean(np.array(result_x))))
+
+            print('Mean value of G(x):\n' +
+                  str(np.mean(np.array(result_func_x))))
+
+            # standard deviations
+            print('Standard deviation of x:\n' +
+                  str(np.std(np.array(result_x))))
+
+            print('Standard deviation of G(x):\n' +
                   str(np.std(np.array(result_func_x))))
 
 
