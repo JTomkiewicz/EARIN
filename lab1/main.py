@@ -45,10 +45,10 @@ def main():
         batch_mode = int(input('Insert 0 or 1! Input: '))
 
     if batch_mode == 0:
-        n = 1
+        n = 1  # when batch mode not selected, perform only 1 iteration
     else:
         while True:
-            try:
+            try:  # how many times run
                 n = input('How many times run program?\nInput: ')
                 n = int(n)
                 break
