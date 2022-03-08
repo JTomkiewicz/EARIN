@@ -24,8 +24,8 @@ def gradientDescentFx(a, b, c, d, x):
 
         if(abs(x_new - x) > 1e100):
             print(
-                'Breaking!. Your function is probably going to minus inf. Check params!')
-            return
+                'Breaking! Your function is probably going to minus inf. Check params!')
+            return 0, 0
 
         x = x_new
 
@@ -53,8 +53,8 @@ def gradientDescentGx(A, b, c, x):
 
         if(abs(x_new[0][0] - x[0][0]) > 1e100 and abs(x_new[1][0] - x[1][0]) > 1e100):
             print(
-                'Breaking!. Your function is probably going to minus inf. Check params!')
-            return
+                'Breaking! Your function is probably going to minus inf. Check params!')
+            return 0, 0
 
         x = x_new
 

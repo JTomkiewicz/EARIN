@@ -53,7 +53,7 @@ def main():
                 n = int(n)
                 break
             except ValueError:
-                print("Input must be a int! Input: ")
+                print('Input must be a int! Input: ')
 
     # placeholder for results
     result_x = []
@@ -74,6 +74,13 @@ def main():
 
         result_x.append(result[0])
         result_func_x.append(result[1])
+
+    if batch_mode == 0:
+        print('Found x:\n' + str(result_x[0]))
+        print('F(x):' if chosen_func_type == 0 else 'G(x):')
+        print(str(result_func_x[0]))
+    else:
+        print('Functions were performed ' + str(n) + ' times')
 
 
 if __name__ == "__main__":
