@@ -5,11 +5,14 @@ def getStartPoint(func_type, d):  # generate or read start point
     start_point_type = 'scalar number' if func_type == 0 else 'initial vector'
 
     # starting point type
-    start_method = int(input(
-        'Chose how to define start point\n0 - ' + start_point_type + '\n1 - Generate from uniform distribution\nInput: '))
+    print('Chose how to define start point\n0 - ' + start_point_type + '\n1 - Generate from uniform distribution\n')
+    start_method = 2
 
     while start_method not in [0, 1]:
-        start_method = int(input('Insert must be 0 or 1! Input: '))
+        start_method = readScalar('start method ID')
+        if (start_method in [0, 1]):
+            break
+        print('Insert must be 0 or 1!')
 
     if start_method == 0:  # read from user
         if func_type == 0:  # initial scalar number
@@ -22,12 +25,15 @@ def getStartPoint(func_type, d):  # generate or read start point
                 start_p[i][0] = readScalar('x[{}]'.format(i))
 
     else:  # generated from uniform distibution
-        start_point_type = start_point_type.replace('initial ', '')
+        low_rage = readScalar('low range')
+        high_rage = readScalar('high range')
+        if func_type == 0:
+            start_p = np.random.uniform(low_rage, high_rage)
+        else:
+            start_p = np.zeros((d, 1))
 
-        low_rage = input('Insert low range ' + start_point_type + '. Input: ')
-        high_rage = input('Insert high range' + start_point_type + '. Input: ')
-
-        start_p = np.random.uniform(low_rage, high_rage)
+            for i in range(d):
+                start_p[i][0] = np.random.uniform(low_rage, high_rage)
 
     return start_p
 

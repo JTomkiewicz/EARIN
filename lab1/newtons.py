@@ -31,8 +31,8 @@ def newtonsFx(a, b, c, d, x):
 
         x = x_new
 
-    print('Nr of performed iterations: ' + str(i))
-    print('Nr of seconds: ' + str((time.time() - start_time)))
+    # print('Nr of performed iterations: ' + str(i))
+    # print('Nr of seconds: ' + str((time.time() - start_time)))
 
     return x, f(x)
 
@@ -65,8 +65,8 @@ def newtonsGx(A, b, c, x):
 
     Gx = c + np.dot(np.transpose(b), x) + np.dot(np.dot(np.transpose(x), A), x)
 
-    print('Nr of performed iterations: ' + str(i))
-    print('Nr of seconds: ' + str((time.time() - start_time)))
+    # print('Nr of performed iterations: ' + str(i))
+    # print('Nr of seconds: ' + str((time.time() - start_time)))
 
     return x, Gx.item(0)
 

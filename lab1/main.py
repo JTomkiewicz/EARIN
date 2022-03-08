@@ -86,7 +86,7 @@ def main():
 
         if chosen_func_type == 0:  # Fx
             # mean values
-            print('Mean value of x:\n' + str(np.mean(np.array(result_x))))
+            print('Mean value of x:\n' + str(np.mean(np.array(result_x), axis=0, dtype=np.float64)))
 
             print('Mean value of F(x):\n' +
                   str(np.mean(np.array(result_func_x))))
