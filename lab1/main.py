@@ -1,3 +1,5 @@
+import numpy as np
+
 # import inputs validator
 import inputs
 
@@ -81,6 +83,20 @@ def main():
         print(str(result_func_x[0]))
     else:
         print('Functions were performed ' + str(n) + ' times')
+
+        if chosen_func_type == 0:
+            # mean values
+            print('Mean value of x:\n' + str(np.mean(np.array(result_x))))
+
+            print('Mean value of F(x):\n' +
+                  str(np.mean(np.array(result_func_x))))
+
+            # standard deviations
+            print('Standard deviation of x:\n' +
+                  str(np.std(np.array(result_x))))
+
+            print('Standard deviation of F(x):\n' +
+                  str(np.std(np.array(result_func_x))))
 
 
 if __name__ == "__main__":
