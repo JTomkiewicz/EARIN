@@ -86,7 +86,8 @@ def main():
 
         if chosen_func_type == 0:  # Fx
             # mean values
-            print('Mean value of x:\n' + str(np.mean(np.array(result_x), axis=0, dtype=np.float64)))
+            print('Mean value of x:\n' +
+                  str(np.mean(np.array(result_x), axis=0, dtype=np.float64)))
 
             print('Mean value of F(x):\n' +
                   str(np.mean(np.array(result_func_x))))
@@ -100,14 +101,24 @@ def main():
 
         else:  # Gx
             # mean values
-            print('Mean value of x:\n' + str(np.mean(np.array(result_x))))
+            mean_result = np.zeros((params[1], 1))
+            for matrix in result_x:
+                mean_result = np.add(mean_result, matrix)
+
+            mean_result = mean_result / n
+
+            print('Mean value of x:\n' + str(mean_result))
 
             print('Mean value of G(x):\n' +
                   str(np.mean(np.array(result_func_x))))
 
             # standard deviations
-            print('Standard deviation of x:\n' +
-                  str(np.std(np.array(result_x))))
+            deviation = np.zeros((params[1], 1))
+            for matrix in result_x:
+                substract = np.subtract(matrix, mean_result)
+                deviation = np.add(deviation, np.square(substract))
+            deviation = deviation / n
+            print('Standard deviation of x:\n' + str(deviation))
 
             print('Standard deviation of G(x):\n' +
                   str(np.std(np.array(result_func_x))))

@@ -5,7 +5,8 @@ def getStartPoint(func_type, d):  # generate or read start point
     start_point_type = 'scalar number' if func_type == 0 else 'initial vector'
 
     # starting point type
-    print('Chose how to define start point\n0 - ' + start_point_type + '\n1 - Generate from uniform distribution\n')
+    print('Chose how to define start point\n0 - ' +
+          start_point_type + '\n1 - Generate from uniform distribution')
     start_method = 2
 
     while start_method not in [0, 1]:
