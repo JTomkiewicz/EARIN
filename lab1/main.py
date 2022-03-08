@@ -55,25 +55,25 @@ def main():
             except ValueError:
                 print("Input must be a int! Input: ")
 
-    results = []
+    # placeholder for results
+    result_x = []
+    result_func_x = []
 
-    for i in range(n):
+    for i in range(n):  # perform n loops
         if chosen_method == 0:  # gradient
             if chosen_func_type == 0:  # Fx
-                results.append(gradient.gradientDescentFx(
-                    a, b, c, d, start_point))
+                result = gradient.gradientDescentFx(a, b, c, d, start_point)
             else:  # Gx
-                results.append(gradient.gradientDescentGx(
-                    A, b, c, start_point))
+                result = gradient.gradientDescentGx(A, b, c, start_point)
+
         else:  # newtons
             if chosen_func_type == 0:  # Fx
-                results.append(newtons.newtonsFx(a, b, c, d, start_point))
+                result = newtons.newtonsFx(a, b, c, d, start_point)
             else:  # Gx
-                results.append(newtons.newtonsGx(A, b, c, start_point))
+                result = newtons.newtonsGx(A, b, c, start_point)
 
-    if batch_mode == 1:
-        print('After ' + str(n) + ' iterations, result are following:')
-        print(results)
+        result_x.append(result[0])
+        result_func_x.append(result[1])
 
 
 if __name__ == "__main__":

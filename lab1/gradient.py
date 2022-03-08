@@ -24,16 +24,15 @@ def gradientDescentFx(a, b, c, d, x):
 
         if(abs(x_new - x) > 1e100):
             print(
-                'Breaking!\nYour function is probably going to minus inf\nCheck params!')
+                'Breaking!. Your function is probably going to minus inf. Check params!')
             return
 
         x = x_new
 
-    print('Found x: ' + str(x))
-    print('F(x): ' + str(f(x)))
     print('Nr of performed iterations: ' + str(i))
     print('Nr of seconds: ' + str((time.time() - start_time)))
-    return f(x)
+
+    return x, f(x)
 
 
 def gradientDescentGx(A, b, c, x):
@@ -54,22 +53,22 @@ def gradientDescentGx(A, b, c, x):
 
         if(abs(x_new[0][0] - x[0][0]) > 1e100 and abs(x_new[1][0] - x[1][0]) > 1e100):
             print(
-                'Breaking!\nYour function is probably going to minus inf\nCheck params!')
+                'Breaking!. Your function is probably going to minus inf. Check params!')
             return
 
         x = x_new
 
     Gx = c + np.dot(np.transpose(b), x) + np.dot(np.dot(np.transpose(x), A), x)
 
-    print('Found x: ' + str(x))
-    print('G(x): ' + str(Gx))
     print('Nr of performed iterations: ' + str(i))
     print('Nr of seconds: ' + str((time.time() - start_time)))
-    return Gx.item(0), i, (time.time() - start_time), x
 
+    return x, Gx.item(0)
 
+# left for test purposes
 # c = 5
 # b = np.array([[-11], [1]])
 # A = np.array([[21, -1], [-6, 2]])
 # x = np.array([[10], [4]])
+
 # gradientDescentGx(A, b, c, x)
