@@ -1,4 +1,5 @@
 import numpy as np
+import time
 
 # import inputs validator
 import inputs
@@ -10,18 +11,22 @@ import gradient
 
 def main():
     # chose method
-    chosen_method = int(input(
-        'Chose function minimalisation method\n0 - Gradient Descent\n1 - Newtons\nInput: '))
-
-    while chosen_method not in [0, 1]:
-        chosen_method = int(input('Insert 0 or 1! Input: '))
+    chosen_method = 2
+    print('Chose function minimalisation method\n0 - Gradient Descent\n1 - Newtons')
+    while True:
+        chosen_method = inputs.readScalar('method ID')
+        if (chosen_method in [0, 1]):
+            break
+        print('Insert 0 or 1!')
 
     # chose type of func
-    chosen_func_type = int(input(
-        'Chose function type\n0 - F(x) = ax^3 + bx^2 + cx + d\n1 - G(x) = c + b^Tx + x^TAx\nInput: '))
-
-    while chosen_func_type not in [0, 1]:
-        chosen_func_type = int(input('Insert 0 or 1! Input: '))
+    chosen_func_type = 2
+    print('Chose function type\n0 - F(x) = ax^3 + bx^2 + cx + d\n1 - G(x) = c + b^Tx + x^TAx')
+    while True:
+        chosen_func_type = inputs.readScalar('function ID')
+        if (chosen_func_type in [0, 1]):
+            break
+        print('Insert 0 or 1!')
 
     # read and validate inputs
     params = inputs.getParams(chosen_func_type)
@@ -61,6 +66,8 @@ def main():
     result_x = []
     result_func_x = []
 
+    start_global_time = time.time()
+
     for i in range(n):  # perform n loops
         if chosen_method == 0:  # gradient
             if chosen_func_type == 0:  # Fx
@@ -77,8 +84,10 @@ def main():
         result_x.append(result[0])
         result_func_x.append(result[1])
 
+    print('\nNr of seconds: ' + str(time.time() - start_global_time))
+
     if batch_mode == 0:
-        print('Found x:\n' + str(result_x[0]))
+        print('\nFound x:\n' + str(result_x[0]))
         print('F(x):' if chosen_func_type == 0 else 'G(x):')
         print(str(result_func_x[0]))
     else:
@@ -87,10 +96,10 @@ def main():
         if chosen_func_type == 0:  # Fx
             # mean values
             print('Mean value of x:\n' +
-                  str(np.mean(np.array(result_x), axis=0, dtype=np.float64)))
+                  str(np.mean(np.array(result_x), dtype=np.float64)))
 
             print('Mean value of F(x):\n' +
-                  str(np.mean(np.array(result_func_x))))
+                  str(np.mean(np.array(result_func_x), dtype=np.float64)))
 
             # standard deviations
             print('Standard deviation of x:\n' +

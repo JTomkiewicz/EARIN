@@ -73,7 +73,7 @@ def readScalar(letter):  # read input and check if it is a scalar number
             break
         except ValueError:
             print('Input must be a number!')
-    return float(number)
+    return np.float64(number)
 
 
 # for Fx read 4 scalars (abcd), for Gx read c scalar and ask for vector dimensions

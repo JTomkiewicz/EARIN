@@ -3,8 +3,8 @@ import time
 
 
 def newtonsFx(a, b, c, d, x):
-    eps = 0.000001
-    iterations = 5000
+    eps = 1e-10
+    iterations = 1000
 
     def f(x):
         return a*x**3 + b*x**2 + c*x + d
@@ -15,7 +15,6 @@ def newtonsFx(a, b, c, d, x):
     def f_prime2(x):
         return 6*a*x + 2*b
 
-    print("\nStarting computation of Newtons (Fx)")
     start_time = time.time()
 
     for i in range(iterations):
@@ -31,18 +30,13 @@ def newtonsFx(a, b, c, d, x):
 
         x = x_new
 
-    # print('Nr of performed iterations: ' + str(i))
-    # print('Nr of seconds: ' + str((time.time() - start_time)))
-
     return x, f(x)
 
 
 def newtonsGx(A, b, c, x):
-    eps = 10**-10
-    iterations = 1000000
-    learning_rate = 1
+    eps = 1e-10
+    iterations = 1000
 
-    print("\nStarting computation of Newtons (Gx)")
     start_time = time.time()
 
     for i in range(iterations):
@@ -50,8 +44,7 @@ def newtonsGx(A, b, c, x):
 
         f_prime2 = np.add(np.transpose(A), A)
 
-        x_new = x - np.dot(np.dot(np.linalg.inv(f_prime2),
-                           f_prime), learning_rate)
+        x_new = x - np.dot(np.linalg.inv(f_prime2), f_prime)
 
         if ((x[0][0]-x_new[0][0] < eps and x[1][0]-x_new[1][0] < eps) or (time.time() - start_time > 1)):
             break
@@ -64,9 +57,6 @@ def newtonsGx(A, b, c, x):
         x = x_new
 
     Gx = c + np.dot(np.transpose(b), x) + np.dot(np.dot(np.transpose(x), A), x)
-
-    # print('Nr of performed iterations: ' + str(i))
-    # print('Nr of seconds: ' + str((time.time() - start_time)))
 
     return x, Gx.item(0)
 

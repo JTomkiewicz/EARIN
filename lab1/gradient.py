@@ -4,7 +4,8 @@ import time
 
 def gradientDescentFx(a, b, c, d, x):
     eps = 10**-10
-    iterations = 5000
+    iterations = 1000
+
     learning_rate = 0.01
 
     def f(x):
@@ -13,7 +14,6 @@ def gradientDescentFx(a, b, c, d, x):
     def f_prime(x):
         return 3*a*x**2 + 2*b*x + c
 
-    print('\nStarting computation of Gradient descent (Fx)')
     start_time = time.time()
 
     for i in range(iterations):
@@ -29,18 +29,14 @@ def gradientDescentFx(a, b, c, d, x):
 
         x = x_new
 
-    print('Nr of performed iterations: ' + str(i))
-    print('Nr of seconds: ' + str((time.time() - start_time)))
-
     return x, f(x)
 
 
 def gradientDescentGx(A, b, c, x):
     eps = 10**-10
-    iterations = 1000000
+    iterations = 1000
     learning_rate = 0.01
 
-    print('\nStarting computation of Gradient descent (Gx)')
     start_time = time.time()
 
     for i in range(iterations):
@@ -60,15 +56,4 @@ def gradientDescentGx(A, b, c, x):
 
     Gx = c + np.dot(np.transpose(b), x) + np.dot(np.dot(np.transpose(x), A), x)
 
-    print('Nr of performed iterations: ' + str(i))
-    print('Nr of seconds: ' + str((time.time() - start_time)))
-
     return x, Gx.item(0)
-
-# left for test purposes
-# c = 5
-# b = np.array([[-11], [1]])
-# A = np.array([[21, -1], [-6, 2]])
-# x = np.array([[10], [4]])
-
-# gradientDescentGx(A, b, c, x)
