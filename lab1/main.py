@@ -45,22 +45,21 @@ def main():
     start_point = inputs.getStartPoint(chosen_func_type, params[1])
 
     # ask user for batch mode
-    batch_mode = int(
-        input('Would you like to use batch mode?\n0 - No\n1 - Yes\nInput: '))
 
-    while batch_mode not in [0, 1]:
-        batch_mode = int(input('Insert 0 or 1! Input: '))
+    print('Would you like to use batch mode?\n0 - No\n1 - Yes')
+    while True:
+        batch_mode = inputs.readScalar('batch mode ID')
+        if (batch_mode in [0, 1]):
+            break
+        print('Insert 0 or 1!')
 
     if batch_mode == 0:
         n = 1  # when batch mode not selected, perform only 1 iteration
     else:
-        while True:
-            try:  # how many times run
-                n = input('How many times run program?\nInput: ')
-                n = int(n)
-                break
-            except ValueError:
-                print('Input must be a int! Input: ')
+        # how many times run
+        print('How many times run program?')
+        n = inputs.readScalar('n')
+        n = int(n)
 
     # placeholder for results
     result_x = []
