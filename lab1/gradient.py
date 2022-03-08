@@ -13,7 +13,7 @@ def gradientDescentFx(a, b, c, d, x):
     def f_prime(x):
         return 3*a*x**2 + 2*b*x + c
 
-    print("Starting computation of Gradient descent (Fx)")
+    print('\nStarting computation of Gradient descent (Fx)')
     start_time = time.time()
 
     for i in range(iterations):
@@ -40,7 +40,7 @@ def gradientDescentGx(A, b, c, x):
     iterations = 1000000
     learning_rate = 0.01
 
-    print("Starting computation of Gradient descent (Gx)")
+    print('\nStarting computation of Gradient descent (Gx)')
     start_time = time.time()
 
     for i in range(iterations):

@@ -15,7 +15,7 @@ def newtonsFx(a, b, c, d, x):
     def f_prime2(x):
         return 6*a*x + 2*b
 
-    print("Starting computation of Newtons (Fx)")
+    print("\nStarting computation of Newtons (Fx)")
     start_time = time.time()
 
     for i in range(iterations):
@@ -42,7 +42,7 @@ def newtonsGx(A, b, c, x):
     iterations = 1000000
     learning_rate = 1
 
-    print("Starting computation of Newtons (Gx)")
+    print("\nStarting computation of Newtons (Gx)")
     start_time = time.time()
 
     for i in range(iterations):

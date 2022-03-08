@@ -82,7 +82,7 @@ def main():
         print('F(x):' if chosen_func_type == 0 else 'G(x):')
         print(str(result_func_x[0]))
     else:
-        print('Functions were performed ' + str(n) + ' times')
+        print('\nFunctions were performed ' + str(n) + ' times\n')
 
         if chosen_func_type == 0:  # Fx
             # mean values
