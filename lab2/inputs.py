@@ -1,7 +1,7 @@
 import numpy as np
 
 
-def readScalar(msg):  # read input and check if it is a scalar number
+def readScalar(msg: str):  # read input and check if it is a scalar number
     while True:
         try:
             number = input('Insert ' + msg + ': ')
@@ -13,22 +13,22 @@ def readScalar(msg):  # read input and check if it is a scalar number
     return np.float64(number)
 
 
-def getVector(dimensions):  # create and return vector b
+def getVector(dim: int):  # create and return vector b
     # array of zeros
-    array = np.zeros((dimensions, 1))
+    array = np.zeros((dim, 1))
 
-    for i in range(dimensions):
+    for i in range(dim):
         array[i][0] = readScalar('b[{}]'.format(i))
 
     return array
 
 
-def getMatrix(dimensions):  # create and return matrix A
+def getMatrix(dim: int):  # create and return matrix A
     # matrix of zeros
-    matrix = np.zeros((dimensions, dimensions))
+    matrix = np.zeros((dim, dim))
 
-    for i in range(dimensions):
-        for j in range(dimensions):
+    for i in range(dim):
+        for j in range(dim):
             matrix[i][j] = readScalar('A[{}][{}]'.format(i, j))
 
     return np.matrix(matrix)
