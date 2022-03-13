@@ -1,5 +1,9 @@
+# import inputs validator
+import inputs
+
+
 def main():
-    print('hello world')
+    c, b, A = inputs.getParams()
 
 
 if __name__ == "__main__":
