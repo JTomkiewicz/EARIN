@@ -30,20 +30,21 @@ def crossover(g1, g2):  # single point crossover
     # random int where genomes will be cut
     ri = random.randint(1, len(g1) - 1)
 
-    return g1[:ri] + g2[ri:], g2[:ri] + g1[ri:]
+    cross1 = g1[:ri] + g2[ri:]
+    cross2 = g2[:ri] + g1[ri:]
+
+    return [cross1, cross2]
 
 
-def selection(pop):
+def selection(population, A, b, c):
     # list of 2 randomly chosen elements of population
-    return random.choices(population=pop, weights=[fitness(g) for g in pop], k=2)
+    return random.choices(population=population, weights=[fitness(g[0], g[1], A, b, c) for g in population], k=2)
 
 
-def mutation(g, n=1, probability=0.5):
-    for _ in range(n):
-        # random index
-        i = random.randrange(len(g))
-        # change random values
-        g[i] = g[i] if random() > probability else str(abs(int(g[i]) - 1))
+def mutation(g, probability):
+    i = random.randrange(len(g))
+    # change random values
+    g[i] = g[i] if random.random() > probability else abs(g[i] - 1)
 
     return g
 
@@ -71,15 +72,37 @@ def geneticAlgorithm(populationSize, crossoverProb, mutationProb, nrOfIterations
 
         newGeneration = population[:2]
 
-        print(newGeneration)
-    return
+        for _ in range(int(len(population) / 2) - 1):
+            parents = selection(population, A, b, c)
+
+            firstCrossover = crossover(parents[0][0], parents[1][0])
+            secondCrossover = crossover(parents[0][1], parents[1][1])
+
+            firstMutation = mutation(firstCrossover[0], mutationProb)
+            secondMutation = mutation(firstCrossover[1], mutationProb)
+
+            thirdMutation = mutation(secondCrossover[0], mutationProb)
+            forthMutation = mutation(secondCrossover[1], mutationProb)
+
+            newGeneration += [[firstMutation, secondMutation],
+                              [thirdMutation, forthMutation]]
+
+        population = newGeneration
+
+        population = sorted(
+            population, key=lambda genome: fitness(genome[0], genome[1], A, b, c), reverse=True)
+
+        # print(f'iteration: {i}')
+        # print(f'f(x): {fitness(population[0][0], population[0][1], A, b, c)}')
+
+    print(f'Nr of iterations: {i}')
+    print(f'x0: {int(genomeString(population[0][0]), 2)}')
+    print(f'x1: {int(genomeString(population[0][1]), 2)}')
+    print(f'f(x): {fitness(population[0][0], population[0][1], A, b, c)}')
 
 
 c = 5
 b = np.array([[-11], [1]])
 A = np.array([[21, -1], [-6, 2]])
-# x = np.array([[10], [4]])
 
-# print(fx(x, A, b, c).item(0))
-
-geneticAlgorithm(3, 0.5, 0.5, 5, A, b, c)
+geneticAlgorithm(10, 0.5, 0.5, 10000, A, b, c)
