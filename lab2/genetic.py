@@ -63,10 +63,10 @@ def genomeString(g):
     return "".join(map(str, g))
 
 
-def geneticAlgorithm(populationSize, crossoverProb, mutationProb, nrOfIterations, A, b, c):
-    population = createPopulation(populationSize)
+def geneticAlgorithm(popSize, crossProb, mutatProb, n, A, b, c, d):
+    population = createPopulation(popSize)
 
-    for i in range(nrOfIterations):
+    for i in range(n):
         population = sorted(
             population, key=lambda genome: fitness(genome[0], genome[1], A, b, c), reverse=True)
 
@@ -78,11 +78,11 @@ def geneticAlgorithm(populationSize, crossoverProb, mutationProb, nrOfIterations
             firstCrossover = crossover(parents[0][0], parents[1][0])
             secondCrossover = crossover(parents[0][1], parents[1][1])
 
-            firstMutation = mutation(firstCrossover[0], mutationProb)
-            secondMutation = mutation(firstCrossover[1], mutationProb)
+            firstMutation = mutation(firstCrossover[0], mutatProb)
+            secondMutation = mutation(firstCrossover[1], mutatProb)
 
-            thirdMutation = mutation(secondCrossover[0], mutationProb)
-            forthMutation = mutation(secondCrossover[1], mutationProb)
+            thirdMutation = mutation(secondCrossover[0], mutatProb)
+            forthMutation = mutation(secondCrossover[1], mutatProb)
 
             newGeneration += [[firstMutation, secondMutation],
                               [thirdMutation, forthMutation]]
@@ -99,10 +99,3 @@ def geneticAlgorithm(populationSize, crossoverProb, mutationProb, nrOfIterations
     print(f'x0: {int(genomeString(population[0][0]), 2)}')
     print(f'x1: {int(genomeString(population[0][1]), 2)}')
     print(f'f(x): {fitness(population[0][0], population[0][1], A, b, c)}')
-
-
-c = 5
-b = np.array([[-11], [1]])
-A = np.array([[21, -1], [-6, 2]])
-
-geneticAlgorithm(10, 0.5, 0.5, 10000, A, b, c)
