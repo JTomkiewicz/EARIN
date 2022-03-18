@@ -2,54 +2,77 @@ import random
 import numpy as np
 
 
-def fx(x, A, b, c):  # fx = x^T*A*x + b^T * x + c
+def fx(x, A, b, c):
     return (np.dot(np.dot(np.transpose(x), A), x) + np.dot(np.transpose(b), x) + c).item(0)
 
 
-def fitness(x, A, b, c):
-    ans = fx(x, A, b, c)
+def fitness(g1, g2, A, b, c):
+    num1 = int(genomeString(g1), 2)
+    num2 = int(genomeString(g2), 2)
 
-    if ans == 0:
-        return 99999
-    else:
-        return abs(1/ans)
+    if num1 > 1000 or num2 > 1000 or num1 < -1000 or num2 < -1000:
+        return -1000
 
-
-def geneticAlgorithm(A, b, c):
-    solutions = []
-
-    for s in range(1000):
-        solutions.append(np.matrix([[random.uniform(-1000, 1000)],  [random.uniform(-1000, 1000)]]))
-
-    for i in range(1000):
-        rankedsolutions = []
-
-        for s in solutions:
-            rankedsolutions.append((fitness(s, A, b, c), s))
-
-        rankedsolutions.sort()
-        rankedsolutions.reverse()
-
-        print(f"=== Gen {i} best solutions ===")
-        print(rankedsolutions[0])
-
-        bestsolutions = rankedsolutions[:100]
-
-        elements = []
-        for s in bestsolutions:
-            elements.append(s[1])
-
-        new_gen = []
+    x = [num1, num2]
+    # get result of func for given params
+    return fx(x, A, b, c)
 
 
+def crossover(g1, g2):  # single point crossover
+    # if different lengths quit
+    if len(g1) != len(g2):
+        print('genomes g1 and g2 are not the same length!')
+        quit()
 
-        for _ in range(10000):
-            e1 = random.choice(elements).item(0) * random.uniform(0.99, 1.01)
-            e2 = random.choice(elements).item(1) * random.uniform(0.99, 1.01)
+    if len(g1) < 2:
+        return g1, g2
 
-            new_gen.append(np.matrix([[e1], [e2]]))
+    # random int where genomes will be cut
+    ri = random.randint(1, len(g1) - 1)
 
-        solutions = new_gen
+    return g1[:ri] + g2[ri:], g2[:ri] + g1[ri:]
+
+
+def selection(pop):
+    # list of 2 randomly chosen elements of population
+    return random.choices(population=pop, weights=[fitness(g) for g in pop], k=2)
+
+
+def mutation(g, n=1, probability=0.5):
+    for _ in range(n):
+        # random index
+        i = random.randrange(len(g))
+        # change random values
+        g[i] = g[i] if random() > probability else str(abs(int(g[i]) - 1))
+
+    return g
+
+
+def createGenome():
+    num1 = random.choices([0, 1], k=10)
+    num2 = random.choices([0, 1], k=10)
+    return [num1, num2]
+
+
+def createPopulation(popSize):
+    return [createGenome() for _ in range(popSize)]
+
+
+def genomeString(g):
+    return "".join(map(str, g))
+
+
+def geneticAlgorithm(populationSize, crossoverProb, mutationProb, nrOfIterations, A, b, c):
+    population = createPopulation(populationSize)
+
+    for i in range(nrOfIterations):
+        population = sorted(
+            population, key=lambda genome: fitness(genome[0], genome[1], A, b, c), reverse=True)
+
+        newGeneration = population[:2]
+
+        print(newGeneration)
+    return
 
 
 c = 5
@@ -59,4 +82,4 @@ A = np.array([[21, -1], [-6, 2]])
 
 # print(fx(x, A, b, c).item(0))
 
-geneticAlgorithm(A, b, c)
+geneticAlgorithm(3, 0.5, 0.5, 5, A, b, c)
