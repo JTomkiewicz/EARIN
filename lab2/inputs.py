@@ -1,7 +1,7 @@
 import numpy as np
 
 
-def readScalar(msg: str):  # read input and check if it is a scalar number
+def readScalar(msg: str):  # read input and check if it is scalar
     while True:
         try:
             number = input(f'Insert {msg}: ')
@@ -13,7 +13,7 @@ def readScalar(msg: str):  # read input and check if it is a scalar number
     return np.float64(number)
 
 
-def readInt(msg: str):
+def readInt(msg: str):  # read input and check if it is integer
     while True:
         try:
             number = input(f'Insert {msg}: ')
@@ -46,10 +46,11 @@ def getMatrix(dim: int):  # create and return matrix A
     return np.matrix(matrix)
 
 
-def getFunctionParams():  # create c, b and A
+def getFunctionParams():  # read c, b, A
     # reac scalar number c
     c = readScalar('c')
 
+    # get vector dimensions
     n = 0
     while n <= 0:  # n has to be > 0
         n = readInt('vector b length')
@@ -61,7 +62,7 @@ def getFunctionParams():  # create c, b and A
     return c, b, A
 
 
-def getAlgorithmParams():
+def getAlgorithmParams():  # read algo params
     popSize = readInt('population size')
 
     crossProb = readScalar('crossover probability')
@@ -70,3 +71,11 @@ def getAlgorithmParams():
     n = readInt('number of algo iterations')
 
     return popSize, crossProb, mutatProb, n
+
+
+def getRange():
+    d = readInt('d')
+    while d < 1:
+        d = readInt('d')
+
+    return d

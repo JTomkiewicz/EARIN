@@ -1,17 +1,20 @@
 # inputs validator
 import inputs
-
 # genetic algorithm
 import genetic
 
 
 def main():
+    # get c, b, A params
     c, b, A = inputs.getFunctionParams()
 
-    d = inputs.readInt('d')
+    # get range of serched integers
+    d = inputs.getRange()
 
+    # get algo params
     popSize, crossProb, mutatProb, n = inputs.getAlgorithmParams()
 
+    # perform algo
     genetic.geneticAlgorithm(popSize, crossProb, mutatProb, n, A, b, c, d)
 
 
