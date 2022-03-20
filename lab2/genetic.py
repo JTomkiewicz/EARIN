@@ -6,18 +6,19 @@ def fx(x):  # f(x) = x^T*A*x + b^T*x + c
     return (np.dot(np.dot(np.transpose(x), A), x) + np.dot(np.transpose(b), x) + c).item(0)
 
 
-def genomeString(g):  # convert genome to string
-    return "".join(map(str, g))
-
-
-def genomeInt(g):  # convert genome to int
-    return int(genomeString(g), 2)
+def genomeInt(g):
+    # convert genome to int
+    decimal = 0
+    for index in range(len(g) - 1):
+        decimal += g[index] * 2**index
+    decimal -= g[-1] * 2**(len(g) - 1)
+    return decimal
 
 
 def createGenome(dim):  # create table that consist of two binary tables of length 10
     numberList = []
     for _ in range(dim):
-        numberList.append(random.choices([0, 1], k=10))
+        numberList.append(random.choices([0, 1], k=intRange+1))
     return numberList
 
 
@@ -31,20 +32,18 @@ def fitness(g):
     for binaryList in g:
         x.append(genomeInt(binaryList))
 
-    # check if values are out of range
-    for number in x:
-        if number >= 2**intRange or number < -2**intRange:
-            return -1000
-
     # return result of func
     return fx(x)
 
 
-def crossover(g1, g2):  # single point crossover
+def crossover(g1, g2, prob):  # single point crossover
     # if different lengths quit
     if len(g1) != len(g2):
         print('genomes g1 and g2 are not the same length!')
         quit()
+
+    if random.random() < prob:
+        return g1, g2
 
     # check if genomes have only 2 elements
     if len(g1) < 2:
@@ -80,8 +79,10 @@ def printSummary(i, population, funcValue, dim):
 
 
 def geneticAlgorithm(popSize, crossProb, mutatProb, n, _A, _b, _c, _intRange, dim):
+    # set global variables
     global A, b, c, intRange
     A, b, c, intRange = _A, _b, _c, _intRange
+
     # generate new population
     population = createPopulation(popSize, dim)
 
@@ -92,25 +93,26 @@ def geneticAlgorithm(popSize, crossProb, mutatProb, n, _A, _b, _c, _intRange, di
             population, key=lambda g: fitness(g), reverse=True)
 
         # take two best genomes
-        newGeneration = population[:2]
+        newPopulation = population[:2]
 
         for _ in range(int(len(population) / 2) - 1):
             # select best two genomes
             parents = selection(population)
 
-            # perform crossover
+            # crossover
             mutationList = []
             for j in range(dim):
-                mutationList.append(crossover(parents[0][j], parents[1][j]))
+                mutationList.append(
+                    crossover(parents[0][j], parents[1][j], crossProb))
 
             # mutation
             for j in range(dim):
                 mutationList[j] = mutation(mutationList[j], mutatProb)
 
             # add new genome to generation
-            newGeneration += mutationList
+            newPopulation += mutationList
 
-        population = newGeneration
+        population = newPopulation
 
         # sort population by best fitness desc
         population = sorted(
