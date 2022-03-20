@@ -32,7 +32,6 @@ def fitness(g):
     x = []
     for binaryList in g:
         x.append(genomeInt(binaryList))
-
     # return result of func
     return fx(x)
 
@@ -59,9 +58,26 @@ def crossover(g1, g2, prob):  # single point crossover
     return [cross1, cross2]
 
 
-def selection(population):
-    # list of 2 randomly chosen elements of population
-    return random.choices(population=population, weights=[fitness(g) for g in population], k=2)
+def selection(population):  # list of 2 randomly chosen elements of population
+    functionValues = []
+    valuesSum = 0
+    currentMin = fitness(population[0])
+
+    for genome in population:
+        val = fitness(genome)
+
+        if val < currentMin:
+            currentMin = val
+
+        functionValues.append(val)
+        valuesSum += val
+
+    weightsList = []
+
+    for value in functionValues:
+        weightsList.append(value-currentMin)
+
+    return random.choices(population=population, weights=weightsList, k=2)
 
 
 def mutation(g, prob):
@@ -73,6 +89,7 @@ def mutation(g, prob):
 
 def printSummary(i, population, funcValue, dim):
     print(f'Nr of iterations: {i}')
+
     for index in range(dim):
         print(f'x{index}: {genomeInt(population[0][index])}')
 
@@ -101,17 +118,26 @@ def geneticAlgorithm(popSize, crossProb, mutatProb, n, _A, _b, _c, _intRange, di
             parents = selection(population)
 
             # crossover
-            mutationList = []
+            crossoverList = []
+
             for j in range(dim):
-                mutationList.append(
+                crossoverList.append(
                     crossover(parents[0][j], parents[1][j], crossProb))
 
             # mutation
-            for j in range(dim):
-                mutationList[j] = mutation(mutationList[j], mutatProb)
+            for j in crossoverList:
+                for k in j:
+                    k = mutation(k, mutatProb)
+
+            firstGenome = []
+            secondGenome = []
+            for index in range(dim):
+                firstGenome.append(crossoverList[index][0])
+                secondGenome.append(crossoverList[index][1])
 
             # add new genome to generation
-            newPopulation += mutationList
+            newPopulation += firstGenome
+            newPopulation += secondGenome
 
         population = newPopulation
 
