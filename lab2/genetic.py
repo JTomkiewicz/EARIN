@@ -6,11 +6,12 @@ def fx(x):  # f(x) = x^T*A*x + b^T*x + c
     return (np.dot(np.dot(np.transpose(x), A), x) + np.dot(np.transpose(b), x) + c).item(0)
 
 
-def genomeInt(g):
-    # convert genome to int
+def genomeInt(g):  # convert genome to int
     decimal = 0
+
     for index in range(len(g) - 1):
         decimal += g[index] * 2**index
+
     decimal -= g[-1] * 2**(len(g) - 1)
     return decimal
 
@@ -42,7 +43,7 @@ def crossover(g1, g2, prob):  # single point crossover
         print('genomes g1 and g2 are not the same length!')
         quit()
 
-    if random.random() < prob:
+    if random.random() > prob:
         return g1, g2
 
     # check if genomes have only 2 elements
