@@ -136,8 +136,7 @@ def geneticAlgorithm(popSize, crossProb, mutatProb, n, _A, _b, _c, _intRange, di
                 secondGenome.append(crossoverList[index][1])
 
             # add new genome to generation
-            newPopulation += firstGenome
-            newPopulation += secondGenome
+            newPopulation += [firstGenome, secondGenome]
 
         population = newPopulation
 
