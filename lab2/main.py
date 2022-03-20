@@ -5,17 +5,20 @@ import genetic
 
 
 def main():
+    # get problem dimensionality
+    dim = inputs.getRange('problem dimensionality')
+
     # get c, b, A params
-    c, b, A = inputs.getFunctionParams()
+    c, b, A = inputs.getFunctionParams(dim)
 
     # get range of serched integers
-    d = inputs.getRange()
+    d = inputs.getRange('d')
 
     # get algo params
     popSize, crossProb, mutatProb, n = inputs.getAlgorithmParams()
 
     # perform algo
-    genetic.geneticAlgorithm(popSize, crossProb, mutatProb, n, A, b, c, d)
+    genetic.geneticAlgorithm(popSize, crossProb, mutatProb, n, A, b, c, d, dim)
 
 
 if __name__ == "__main__":

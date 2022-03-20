@@ -46,18 +46,13 @@ def getMatrix(dim: int):  # create and return matrix A
     return np.matrix(matrix)
 
 
-def getFunctionParams():  # read c, b, A
+def getFunctionParams(dim: int):  # read c, b, A
     # reac scalar number c
     c = readScalar('c')
 
-    # get vector dimensions
-    n = 0
-    while n <= 0:  # n has to be > 0
-        n = readInt('vector b length')
-
     # get matrix A and vector b
-    b = getVector(n)
-    A = getMatrix(n)
+    b = getVector(dim)
+    A = getMatrix(dim)
 
     return c, b, A
 
@@ -73,9 +68,8 @@ def getAlgorithmParams():  # read algo params
     return popSize, crossProb, mutatProb, n
 
 
-def getRange():
-    d = readInt('d')
+def getRange(msg: str):
+    d = readInt(msg)
     while d < 1:
-        d = readInt('d')
-
+        d = readInt(msg)
     return d
