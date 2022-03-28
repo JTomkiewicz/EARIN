@@ -80,7 +80,7 @@ def play():
             while True:
                 start = time.time()
                 position = [None, None]
-                (m, position) = min_alpha_beta(-2, 2)
+                (m, position) = min(-2, 2)
                 end = time.time()
                 print('Evaluation time: {}s'.format(round(end - start, 7)))
                 print('Recommended move: X = {}, Y = {}'.format(
@@ -120,7 +120,7 @@ def max(alpha, beta):
         for j in range(0, 3):
             if board[i][j] == '.':
                 board[i][j] = 'O'
-                (m, min_pos) = min_alpha_beta(alpha, beta)
+                (m, min_pos) = min(alpha, beta)
                 if m > maxv:
                     maxv = m
                     max_pos = [i, j]
@@ -133,7 +133,7 @@ def max(alpha, beta):
     return (maxv, max_pos)
 
 
-def min_alpha_beta(alpha, beta):
+def min(alpha, beta):
     minv = 2
     min_pos = [None, None]
     result = isEnd()
