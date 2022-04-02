@@ -1,4 +1,4 @@
-def readInt(msg: str):  # read input and check if it is integer
+def readInt(msg: str):
     while True:
         try:
             number = input(f'Insert {msg}: ')
@@ -24,7 +24,7 @@ def printBoard():
 
 
 def isValid(position):
-    # check if position is not out of range or position is occupied
+    # check if position is out of range or position is occupied
     if position[0] not in range(3):
         return False
     elif position[1] not in range(3):
@@ -66,7 +66,7 @@ def isEnd():
     return '.'
 
 
-def play():
+def game():
     global playerTurn
 
     while True:
@@ -75,10 +75,8 @@ def play():
 
         # check if game ended
         if result != None:
-            if result == 'X':
-                print('Game over! X win!')
-            elif result == 'O':
-                print('Game over! O win!')
+            if result == 'X' or result == 'O':
+                print(f'Game over! {result} win!')
             elif result == '.':
                 print("Game over! It is a tie!")
 
@@ -113,7 +111,7 @@ def play():
             playerTurn = 'X'
 
 
-def max(alpha, beta):
+def max(alpha: int, beta: int):
     maxValue = -2
     maxPosition = [None, None]
     result = isEnd()
@@ -146,7 +144,7 @@ def max(alpha, beta):
     return (maxValue, maxPosition)
 
 
-def min(alpha, beta):
+def min(alpha: int, beta: int):
     minValue = 2
     minPosition = [None, None]
     result = isEnd()
@@ -185,7 +183,7 @@ def main():
     global playerTurn
     playerTurn = 'X'
 
-    play()
+    game()
 
 
 if __name__ == "__main__":
