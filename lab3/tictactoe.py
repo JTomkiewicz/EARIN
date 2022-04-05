@@ -12,9 +12,9 @@ def readInt(msg: str) -> int:
 
 def clearBoard() -> None:
     global board
-    board = [['.', '.', '.'],
-             ['.', '.', '.'],
-             ['.', '.', '.']]
+    board = [[' ', ' ', ' '],
+             [' ', ' ', ' '],
+             [' ', ' ', ' ']]
 
 
 def printBoard() -> None:
@@ -29,7 +29,7 @@ def isPositionValid(position: list) -> bool:
         return False
     elif position[1] not in range(3):
         return False
-    elif board[position[0]][position[1]] != '.':  # check if position is not already occupied
+    elif board[position[0]][position[1]] != ' ':  # check if position is not already occupied
         return False
 
     # position is fine
@@ -39,30 +39,30 @@ def isPositionValid(position: list) -> bool:
 def isGameEnded():
     # vertical win
     for i in range(3):
-        if board[0][i] != '.' and board[0][i] == board[1][i] == board[2][i]:
+        if board[0][i] != ' ' and board[0][i] == board[1][i] == board[2][i]:
             return board[0][i]
 
     # horizontal win
     for i in range(3):
-        if board[i][0] != '.' and board[i][0] == board[i][1] == board[i][2]:
+        if board[i][0] != ' ' and board[i][0] == board[i][1] == board[i][2]:
             return board[i][0]
 
     # 1st diagonal win
-    if board[0][0] != '.' and board[0][0] == board[1][1] == board[2][2]:
+    if board[0][0] != ' ' and board[0][0] == board[1][1] == board[2][2]:
         return board[0][0]
 
     # 2nd diagonal win
-    if board[0][2] != '.' and board[0][2] == board[1][1] == board[2][0]:
+    if board[0][2] != ' ' and board[0][2] == board[1][1] == board[2][0]:
         return board[0][2]
 
     for i in range(3):
         for j in range(3):
             # check if there is still empty space
-            if board[i][j] == '.':
+            if board[i][j] == ' ':
                 return None
 
     # no wins && no empty space => tie
-    return '.'
+    return ' '
 
 
 def playGame() -> None:
@@ -77,7 +77,7 @@ def playGame() -> None:
             # show result
             if result == 'X' or result == 'O':
                 print(f'Game over! {result} win!')
-            elif result == '.':
+            elif result == ' ':
                 print("Game over! It is a tie!")
 
             # clear board
@@ -89,11 +89,8 @@ def playGame() -> None:
             while True:
 
                 position = [None, None]
-                position = min(-2, 2)[1]
 
                 print('Your turn!')
-                print(
-                    f'Algorithm recomends to place X at row = {position[0] + 1} column = {position[1] + 1}')
 
                 # get coordinates from user
                 position[0] = readInt('row number')
@@ -124,12 +121,12 @@ def max(alpha: int, beta: int) -> tuple:
         return -1, [0, 0]
     elif result == 'O':
         return 1, [0, 0]
-    elif result == '.':
+    elif result == ' ':
         return 0, [0, 0]
 
     for i in range(3):
         for j in range(3):
-            if board[i][j] == '.':
+            if board[i][j] == ' ':
                 board[i][j] = 'O'
                 minValue = min(alpha, beta)[0]
 
@@ -137,7 +134,7 @@ def max(alpha: int, beta: int) -> tuple:
                     maxValue = minValue
                     maxPosition = [i, j]
 
-                board[i][j] = '.'
+                board[i][j] = ' '
 
                 # alpha-beta pruning
                 if maxValue >= beta:
@@ -157,12 +154,12 @@ def min(alpha: int, beta: int) -> tuple:
         return -1, [0, 0]
     elif result == 'O':
         return 1, [0, 0]
-    elif result == '.':
+    elif result == ' ':
         return 0, [0, 0]
 
     for i in range(3):
         for j in range(3):
-            if board[i][j] == '.':
+            if board[i][j] == ' ':
                 board[i][j] = 'X'
                 maxValue = max(alpha, beta)[0]
 
@@ -170,7 +167,7 @@ def min(alpha: int, beta: int) -> tuple:
                     minValue = maxValue
                     minPosition = [i, j]
 
-                board[i][j] = '.'
+                board[i][j] = ' '
 
                 # alpha-beta pruning
                 if minValue <= alpha:
