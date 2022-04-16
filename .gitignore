@@ -133,3 +133,7 @@ dmypy.json
 
 # CSV files
 *.csv
+
+# Lab4 DataSet files
+*.txt
+*.arff
