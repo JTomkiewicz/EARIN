@@ -35,15 +35,15 @@ def main() -> None:
     for colName in trainFile.columns:
         if trainFile[colName].dtypes == 'object':
             uniqueCategory = len(trainFile[colName].unique())
-            print(f'Feature {colName} has {uniqueCategory} categories')
+            print(f'feature {colName} has {uniqueCategory} categories')
 
     print('test set:')
     for colName in testFile.columns:
         if testFile[colName].dtypes == 'object':
             uniqueCategory = len(testFile[colName].unique())
-            print(f'Feature {colName} has {uniqueCategory} categories')
+            print(f'feature {colName} has {uniqueCategory} categories')
 
-    # categorical features into np array
+    # categorical features into 2D np array
     categoricalCol = ['protocol_type', 'service', 'flag']
 
     trainCategoricalValues = trainFile[categoricalCol]
@@ -62,7 +62,7 @@ def main() -> None:
     # flag
     uniqueFlag = sorted(trainFile.flag.unique())
     string3 = 'flag_'
-    uniqueFlag2 = [string3 + x for x in uniqueFlag]
+    uniqueFlag2 = [string3 + str(x) for x in uniqueFlag]
 
     # merge together
     dumcols = uniqueProtocol2 + uniqueService2 + uniqueFlag2
@@ -80,7 +80,7 @@ def main() -> None:
         LabelEncoder().fit_transform)
 
     # one-hot-encoding
-    enc = OneHotEncoder(categories='auto')
+    enc = OneHotEncoder()
 
     categoricalValuesEncencTrain = enc.fit_transform(categoricalValuesEncTrain)
     catDataTrain = pd.DataFrame(
@@ -91,7 +91,7 @@ def main() -> None:
     catDataTest = pd.DataFrame(
         categoricalValuesEncencTest.toarray(), columns=dumcolsTest)
 
-    # add missing columns to test set
+    # add 6 missing columns to test set
     trainService = trainFile['service'].tolist()
     testService = testFile['service'].tolist()
     difference = list(set(trainService) - set(testService))
@@ -101,7 +101,7 @@ def main() -> None:
     for col in difference:
         catDataTest[col] = 0
 
-    # add numeric columns to dataframe
+    # add encoded categorical columns to dataframe
     newTrainFile = trainFile.join(catDataTrain)
     newTrainFile.drop('flag', axis=1, inplace=True)
     newTrainFile.drop('protocol_type', axis=1, inplace=True)
@@ -111,6 +111,8 @@ def main() -> None:
     newTestFile.drop('flag', axis=1, inplace=True)
     newTestFile.drop('protocol_type', axis=1, inplace=True)
     newTestFile.drop('service', axis=1, inplace=True)
+
+    # split dataset for 4 smaller datasets (0 - normal, 1 - DoS, 2 - Probe, 3 - R2L, 4 - U2R)
 
 
 if __name__ == '__main__':
