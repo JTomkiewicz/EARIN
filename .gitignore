@@ -137,3 +137,6 @@ include/
 pyvenv.cfg
 share/
 etc/
+
+# training folder for ex6
+training/

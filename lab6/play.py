@@ -1,23 +1,23 @@
 import gym
+from stable_baselines3 import PPO
+import os
 
 env = gym.make('CarRacing-v1')
 
-env.reset()
-env.close()
+ppo_path = os.path.join('Training', 'PPO_Cnn_100k')
+model = PPO.load(ppo_path, env=env)
 
-episodes = 5
+obs = env.reset()
 
-for episode in range(1, episodes+1):
-    obs = env.reset()
-    done = False
-    score = 0
+dones = False
+score = 0
 
-    while not done:
-        env.render()
-        action = env.action_space.sample()
-        obs, reward, done, info = env.step(action)
-        score += reward
-
-    print(f'Episode {episode} score: {score}')
-
-env.close()
+while True:
+    action, _states = model.predict(obs)
+    obs, rewards, dones, info = env.step(action)
+    env.render()
+    score += rewards
+    if dones:
+        env.close()
+        print(f'Score: {score}')
+        break
