@@ -12,5 +12,5 @@ model = PPO('CnnPolicy', env, verbose=1, tensorboard_log=log_path)
 
 model.learn(total_timesteps=100)
 
-ppo_path = os.path.join('training', 'saved_models', 'ppo')
+ppo_path = os.path.join('training', 'ppo')
 model.save(ppo_path)

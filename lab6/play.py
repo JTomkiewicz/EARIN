@@ -1,10 +1,12 @@
 import gym
+from stable_baselines3.common.vec_env import DummyVecEnv
 from stable_baselines3 import PPO
 import os
 
 env = gym.make('CarRacing-v1')
+env = DummyVecEnv([lambda: env])
 
-ppo_path = os.path.join('Training', 'PPO_Cnn_100k')
+ppo_path = os.path.join('training', 'PPO_Cnn_100k')
 model = PPO.load(ppo_path, env=env)
 
 obs = env.reset()
