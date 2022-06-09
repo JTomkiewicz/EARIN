@@ -36,10 +36,10 @@ score = 0
 
 while True:
     action, _states = model.predict(obs)
-    obs, rewards, dones, info = env.step(action)
+    obs, rewards, done, info = env.step(action)
     env.render()
     score += rewards
-    if dones:
+    if done:
         env.close()
         print(f'Score: {score}')
         break
