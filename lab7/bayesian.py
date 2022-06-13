@@ -37,6 +37,6 @@ class BayesianNetwork:
                 f'Name: {node.name}\nParents: {node.parents}\nProb: {node.probabilities}\n')
         print('--------------------------\n')
 
-    # run MCM algorithm
-    def mcm(self, evidence, query, nr_steps):
+    # run MCMC algorithm
+    def mcmc(self, evidence, query, nr_steps):
         pass

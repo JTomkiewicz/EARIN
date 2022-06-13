@@ -9,7 +9,7 @@ def main():
     bn = BayesianNetwork('flu.json')
     bn.print_network()
     # run the MCM algorithm
-    bn.mcm(evidence, query, nr_steps)
+    bn.mcmc(evidence, query, nr_steps)
 
 
 if __name__ == "__main__":
