@@ -7,6 +7,7 @@ def main():
     # evidence, query, nr_steps = read_params()
     # create a Bayesian network
     bn = BayesianNetwork('flu.json')
+    bn.print_network()
     # run the MCM algorithm
     # bn.mcm(evidence, query, nr_steps)
 
