@@ -1,10 +1,13 @@
-def readInt(msg: str) -> int:
+def readInt():
     while True:
         try:
-            number = input(f'Insert {msg}: ')
+            number = input()
             number = int(number)
             break
         except ValueError:
             print('Input must be a int!')
-
     return int(number)
+
+
+def read_params():
+    pass
