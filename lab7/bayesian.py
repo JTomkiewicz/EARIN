@@ -45,7 +45,7 @@ class ProbabilityStructure:
 
 class BayesianNetwork:
     def __init__(self, file_name):
-        self.nodes = []
+        self.nodes = {}
         self.read_json(file_name)
 
     def read_json(self, file_name):
@@ -63,29 +63,29 @@ class BayesianNetwork:
                 network["relations"][key]["parents"],
                 network["relations"][key]["probabilities"],
             )
-            self.nodes.append(node)
+            self.nodes[node.name] = node
 
     # print bayesian network
     def print_network(self):
         print("\n--- Bayesian network: ---\n")
-        for node in self.nodes:
+        for node in self.nodes.values():
             print(
                 f"Name: {node.name}\nParents: {node.parents}\nProb: {node.probabilities}\n"
             )
         print("-------------------------\n")
 
-    # run MCMC algorithm
+    # run gibbs algorithm
     def gibbs_sampler(self, selected_variables, query, nr_steps):
         variables = selected_variables
         variables_to_predict = [
-            node.name for node in self.nodes if node.name not in selected_variables
+            name for name in self.nodes if name not in selected_variables
         ]
 
         # set random values for not selected variables
         for name in variables_to_predict:
             variables[name] = random.choice([False, True])
 
-        # create empty probability structure
+        # create empty probability structures
         query_predictions = {}
         for name in query:
             query_predictions[name] = ProbabilityStructure()
@@ -103,14 +103,16 @@ class BayesianNetwork:
     def give_prediction(self, variables, current_choice):
         probabilities = []
 
+        chosen_node = self.nodes[current_choice]
+
         # HighFever (has parents)
-        if len(self.nodes[current_choice].parents) > 0:
+        if len(chosen_node.parents) > 0:
             for condition in ([True, False]):
                 probabilities.append(
-                    self.nodes[current_choice].get_probability(variables["Flu"], condition))
+                    chosen_node.get_probability(variables["Flu"], condition))
         else:  # Flu (has no parents)
             for condition in ([True, False]):
-                probability = self.nodes[current_choice].get_probability(
+                probability = chosen_node.get_probability(
                     condition)
                 probability *= self.nodes["HighFever"].get_probability(
                     condition, variables["Flu"])
