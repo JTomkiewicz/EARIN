@@ -56,7 +56,7 @@ class BayesianNetwork:
         if network.get("nodes") is None or network.get("relations") is None:
             raise Exception("Invalid json file!")
 
-        # crete nodes
+        # create nodes
         for key in network["nodes"]:
             node = Node(
                 key,
@@ -96,7 +96,9 @@ class BayesianNetwork:
             predicted_choice = self.give_prediction(
                 variables, current_choice)
             variables[current_choice] = predicted_choice
-            query_predictions[current_choice].add_count(predicted_choice)
+
+            if current_choice in query:
+                query_predictions[current_choice].add_count(predicted_choice)
 
         return query_predictions
 
