@@ -1,4 +1,3 @@
-from fileinput import filename
 import json
 import random
 from numpy.random import choice
@@ -119,6 +118,7 @@ class BayesianNetwork:
                 probability *= self.nodes["HighFever"].get_probability(
                     condition, variables["Flu"])
                 probabilities.append(probability)
+
             # scaling of probabilities
             probabilities = [p / sum(probabilities) for p in probabilities]
 

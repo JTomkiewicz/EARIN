@@ -5,11 +5,12 @@ from inputs import read_params
 def main():
     # read program parameters
     evidence, query, nr_steps = read_params()
-    print(evidence, query, nr_steps)
+
     # create & print a Bayesian network
     bn = BayesianNetwork("flu.json")
     bn.print_network()
-    # run the MCM algorithm
+
+    # run the Gibbs sampler & show results
     ret = bn.gibbs_sampler(evidence, query, nr_steps)
     for name, prediction in ret.items():
         print(name)
